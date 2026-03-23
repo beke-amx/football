@@ -35,8 +35,9 @@ services:
       - key: PORT
         value: 10000
 
-  - type: static
+  - type: web
     name: football-frontend
+    env: static
     plan: free
     repo: https://github.com/beke-amx/football
     branch: main
