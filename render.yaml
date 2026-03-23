@@ -4,11 +4,10 @@ services:
     env: node
     plan: free
     region: oregon
-    repo: beke-amx/football
+    repo: https://github.com/beke-amx/football
     branch: main
     rootDir: backend
     buildCommand: npm install && npm run build
-    dockerfilePath: backend/Dockerfile
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -22,26 +21,24 @@ services:
           name: football-redis
           property: connectionString
       - key: JWT_SECRET
-        secret: jwt-secret
+        value: your-jwt-secret-here
       - key: GOOGLE_CLIENT_ID
-        secret: google-client-id
+        value: your-google-client-id-here
       - key: GOOGLE_CLIENT_SECRET
-        secret: google-client-secret
+        value: your-google-client-secret-here
       - key: STRIPE_SECRET_KEY
-        secret: stripe-secret-key
+        value: your-stripe-secret-key-here
       - key: STRIPE_WEBHOOK_SECRET
-        secret: stripe-webhook-secret
+        value: your-stripe-webhook-secret-here
       - key: CLOUDINARY_URL
-        secret: cloudinary-url
+        value: your-cloudinary-url-here
       - key: PORT
         value: 10000
 
-  - type: web
+  - type: static
     name: football-frontend
-    env: static
     plan: free
-    region: oregon
-    repo: beke-amx/football
+    repo: https://github.com/beke-amx/football
     branch: main
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -49,7 +46,7 @@ services:
       - key: REACT_APP_API_URL
         value: https://football-backend.onrender.com
       - key: REACT_APP_GOOGLE_CLIENT_ID
-        secret: google-client-id
+        value: your-google-client-id-here
 
 databases:
   - name: football-db
