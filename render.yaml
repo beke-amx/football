@@ -45,7 +45,6 @@ services:
     branch: main
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: ./dist
     envVars:
       - key: REACT_APP_API_URL
         value: https://football-backend.onrender.com
@@ -57,23 +56,3 @@ databases:
     plan: free
     region: oregon
     type: postgresql
-
-caches:
-  - name: football-redis
-    plan: free
-    region: oregon
-    type: redis
-
-secrets:
-  - name: jwt-secret
-    value: your-jwt-secret-here
-  - name: google-client-id
-    value: your-google-client-id-here
-  - name: google-client-secret
-    value: your-google-client-secret-here
-  - name: stripe-secret-key
-    value: your-stripe-secret-key-here
-  - name: stripe-webhook-secret
-    value: your-stripe-webhook-secret-here
-  - name: cloudinary-url
-    value: your-cloudinary-url-here
