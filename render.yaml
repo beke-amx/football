@@ -55,4 +55,3 @@ databases:
   - name: football-db
     plan: free
     region: oregon
-    type: postgresql
