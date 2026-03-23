@@ -4,14 +4,11 @@ services:
     env: node
     plan: free
     region: oregon
-    source:
-      type: github
-      repo: beke-amx/football
-      branch: main
-      path: backend
-    build:
-      command: npm install && npm run build
-      dockerfilePath: backend/Dockerfile
+    repo: beke-amx/football
+    branch: main
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    dockerfilePath: backend/Dockerfile
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -39,19 +36,15 @@ services:
       - key: PORT
         value: 10000
 
-  - type: web
+  - type: static
     name: football-frontend
-    env: static
     plan: free
     region: oregon
-    source:
-      type: github
-      repo: beke-amx/football
-      branch: main
-      path: frontend
-    build:
-      command: npm install && npm run build
-      publishPath: ./dist
+    repo: beke-amx/football
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: ./dist
     envVars:
       - key: REACT_APP_API_URL
         value: https://football-backend.onrender.com
