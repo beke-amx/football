@@ -1,0 +1,85 @@
+services:
+  - type: web
+    name: football-backend
+    env: node
+    plan: free
+    region: oregon
+    source:
+      type: github
+      repo: beke-amx/football
+      branch: main
+      path: backend
+    build:
+      command: npm install && npm run build
+      dockerfilePath: backend/Dockerfile
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: football-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: football-redis
+          property: connectionString
+      - key: JWT_SECRET
+        secret: jwt-secret
+      - key: GOOGLE_CLIENT_ID
+        secret: google-client-id
+      - key: GOOGLE_CLIENT_SECRET
+        secret: google-client-secret
+      - key: STRIPE_SECRET_KEY
+        secret: stripe-secret-key
+      - key: STRIPE_WEBHOOK_SECRET
+        secret: stripe-webhook-secret
+      - key: CLOUDINARY_URL
+        secret: cloudinary-url
+      - key: PORT
+        value: 10000
+
+  - type: web
+    name: football-frontend
+    env: static
+    plan: free
+    region: oregon
+    source:
+      type: github
+      repo: beke-amx/football
+      branch: main
+      path: frontend
+    build:
+      command: npm install && npm run build
+      publishPath: ./dist
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://football-backend.onrender.com
+      - key: REACT_APP_GOOGLE_CLIENT_ID
+        secret: google-client-id
+
+databases:
+  - name: football-db
+    plan: free
+    region: oregon
+    type: postgresql
+
+caches:
+  - name: football-redis
+    plan: free
+    region: oregon
+    type: redis
+
+secrets:
+  - name: jwt-secret
+    value: your-jwt-secret-here
+  - name: google-client-id
+    value: your-google-client-id-here
+  - name: google-client-secret
+    value: your-google-client-secret-here
+  - name: stripe-secret-key
+    value: your-stripe-secret-key-here
+  - name: stripe-webhook-secret
+    value: your-stripe-webhook-secret-here
+  - name: cloudinary-url
+    value: your-cloudinary-url-here
