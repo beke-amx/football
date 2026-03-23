@@ -35,20 +35,6 @@ services:
       - key: PORT
         value: 10000
 
-  - type: web
-    name: football-frontend
-    env: static
-    plan: free
-    repo: https://github.com/beke-amx/football
-    branch: main
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    envVars:
-      - key: REACT_APP_API_URL
-        value: https://football-backend.onrender.com
-      - key: REACT_APP_GOOGLE_CLIENT_ID
-        value: your-google-client-id-here
-
 databases:
   - name: football-db
     plan: free
